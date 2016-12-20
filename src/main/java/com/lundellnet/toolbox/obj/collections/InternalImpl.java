@@ -49,6 +49,7 @@ class InternalImpl {
 		private ReentrantReadWriteLock fieldLock = null;
 		private T collectionObject = null;
 		
+		@SuppressWarnings("unchecked")
 		protected Field(java.lang.reflect.Field rowField) {
 			this.collectionClass = (Class<T>) rowField.getDeclaringClass();
 			this.collectionField = rowField;
@@ -133,26 +134,41 @@ class InternalImpl {
 	static class Collection <T, F extends InternalApi.Field>
 			implements InternalApi.Collection<T, F>
 	{
+		@FunctionalInterface
 		protected interface FieldBuilder <T, F extends Field<T>> {
 			F build(java.lang.reflect.Field field);
 		}
 		
-		protected static <T, F extends Field<T>> ConcurrentMap<String, F> mapFieldStream(
-				Stream<java.lang.reflect.Field> fieldStream, FieldBuilder<T, F> fieldBuilder
-		) {
-			return fieldStream.map((field) -> fieldBuilder.build(field))
-					.map((fieldAccess) -> new SimpleEntry<String, F>(fieldAccess.getFieldName(), fieldAccess))
-					.collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
-		}
-		
 		private final Class<T> collectionClass;
 		private final ConcurrentMap<String, ? extends Field<T>> collectionFields;
+		private final Supplier<T> collectionSupplier;
 		
 		private T collection = null;
 		
 		protected Collection(FieldBuilder<T, ? extends Field<T>> fieldBuilder, Class<T> collectionClass) {
+			this(fieldBuilder, collectionClass, () -> Reflect.instantiateClass(collectionClass));
+		}
+		
+		protected Collection(FieldBuilder<T, ? extends Field<T>> fieldBuilder, Class<T> collectionClass, Supplier<T> collectionSupplier) {
 			this.collectionClass = collectionClass;
-			this.collectionFields = mapFieldStream(Arrays.stream(collectionClass.getFields()), fieldBuilder);
+			this.collectionFields = Arrays.stream(collectionClass.getFields()).parallel()
+					.map((field) -> fieldBuilder.build(field))
+					.map((fieldAccess) -> new SimpleEntry<String, Field<T>>(fieldAccess.getFieldName(), fieldAccess))
+					.collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
+			this.collectionSupplier = collectionSupplier;
+		}
+		
+		@SuppressWarnings("unchecked")
+		<C extends Collection<T, F>> C init() {
+			collection = collectionSupplier.get();
+			
+			collectionFields.entrySet().stream().forEach((fieldEntry) -> fieldEntry.getValue().init(collection));
+			
+			return (C) this;
+		}
+		
+		boolean initialized() {
+			return (collection != null);
 		}
 
 		T getCollection() {
@@ -218,10 +234,10 @@ class InternalImpl {
 				.collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
 		}
 
-		//@Override
-		public List<E> getCollectionTypes() {
+		/*public List<E> getCollectionTypes() {
 			return collections.entrySet().stream().map(Map.Entry::getKey).collect(java.util.stream.Collectors.toList());
-		}
+		}*/
+		
 		@Override
 		public Supplier<Function<E, C>> supplier() {
 			return () -> (enumMapping) -> getCollection(enumMapping);
@@ -229,7 +245,8 @@ class InternalImpl {
 
 		@Override
 		public Function<Function<E, C>, R> finisher() {
-			final Supplier<DataCollection<R>> collectionSupplier = () -> (identityCollection != null) ? identityCollection : (identityCollection = DataCollection.<R>builder().build(collectObjectType)); 
+			final Supplier<DataCollection<R>> collectionSupplier = () -> (identityCollection != null) ?
+					identityCollection : (identityCollection = DataCollection.<R>builder().build(collectObjectType).init()); 
 			//final BiConsumer<DataCollection<R>, C> collectionAccumulator = null;
 			//final BinaryOperator<DataCollection<R>> collectionCombiner = null;
 			//final Function<DataCollection<R>, R> collectionFinisher = null;
@@ -263,10 +280,9 @@ class InternalImpl {
 				
 			}
 			
-			return collection;
+			return collection.initialized() ? collection : collection.init();
 		}
 		
-		@SuppressWarnings("unused")
 		private void setCollection(E collectionType, C collection) {
 			try {
 				collectionsLock.writeLock().lock();
