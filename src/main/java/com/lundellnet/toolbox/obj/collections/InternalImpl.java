@@ -1,28 +1,19 @@
 package com.lundellnet.toolbox.obj.collections;
 
-import static java.util.stream.Collector.Characteristics.CONCURRENT;
-import static java.util.stream.Collector.Characteristics.UNORDERED;
-
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collector.Characteristics;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.annotations.CollectionConstant;
@@ -30,8 +21,12 @@ import com.lundellnet.toolbox.obj.annotations.DataLocation;
 
 class InternalImpl {
 	@FunctionalInterface
-	interface CollectionDataBuilder <T, C extends Collection<T, F>, F extends CollectionField> {
-		C build(Class<T> t);
+	interface CollectionBuilder <T, C extends Collection<T, F>, F extends CollectionField> {
+		C build(Class<T> t, Supplier<T> s);
+		
+		default C build(Class<T> t) {
+			return build(t, () -> Reflect.instantiateClass(t));
+		};
 	}
 	
 	static class Field <T>
@@ -217,7 +212,7 @@ class InternalImpl {
 		
 		@SuppressWarnings("unchecked")
 		protected Collector(
-				CollectionDataBuilder<Object, C, F> dataBuilder, Class<R> collectObjectType, Class<E> collectEnumType
+				CollectionBuilder<Object, C, F> dataBuilder, Class<R> collectObjectType, Class<E> collectEnumType
 		) {
 			this.collectObjectType = collectObjectType;
 			this.collectEnumType = collectEnumType;
@@ -246,14 +241,12 @@ class InternalImpl {
 		@Override
 		public Function<Function<E, C>, R> finisher() {
 			final Supplier<DataCollection<R>> collectionSupplier = () -> (identityCollection != null) ?
-					identityCollection : (identityCollection = DataCollection.<R>builder().build(collectObjectType).init()); 
+					identityCollection : (identityCollection = DataCollection.<R>builder().build(collectObjectType, identity()).init()); 
 			//final BiConsumer<DataCollection<R>, C> collectionAccumulator = null;
 			//final BinaryOperator<DataCollection<R>> collectionCombiner = null;
 			//final Function<DataCollection<R>, R> collectionFinisher = null;
 			
 			return (s) -> {
-					//R r = identity().get();
-					
 					collectionSupplier.get().getFields().forEach((field) -> {
 						Class<?> fieldType = field.getFieldType();
 						
