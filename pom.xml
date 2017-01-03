@@ -5,13 +5,39 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2-beta</version>
     <name>toolbox-obj</name>
 
     <properties>
 	<java.version>1.8</java.version>
 	<maven.version>2.3.2</maven.version>
     </properties>
+
+    <repositories>
+	<repository>
+	    <id>git2.release</id>
+	    <name>git2 release repository</name>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases/</url>
+	</repository>
+	<repository>
+	    <id>git2.snapshot</id>
+	    <name>git2 snapshot repository</name>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots/</url>
+	</repository>
+    </repositories>
+
+    <distributionManagement>
+	<repository>
+	    <id>lundellnet-git2</id>
+	    <name>git2 release repository</name>
+    	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases/</url>
+	</repository>
+	<snapshotRepository>
+	    <id>lundellnet-git2</id>
+	    <name>git2 snapshot repository</name>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots/</url>
+	</snapshotRepository>
+    </distributionManagement>
 
 	<build>
 	    <pluginManagement>
@@ -33,7 +59,7 @@
 	    <dependency>
 		<groupId>com.lundellnet</groupId>
 		<artifactId>toolbox-obj-api</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.2-beta</version>
 	    </dependency>
 	    <dependency>
 		<groupId>log4j</groupId>
