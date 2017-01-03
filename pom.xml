@@ -5,7 +5,7 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.2-beta</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>toolbox-obj</name>
 
     <properties>
@@ -59,7 +59,7 @@
 	    <dependency>
 		<groupId>com.lundellnet</groupId>
 		<artifactId>toolbox-obj-api</artifactId>
-		<version>0.0.2-beta</version>
+		<version>0.0.3-SNAPSHOT</version>
 	    </dependency>
 	    <dependency>
 		<groupId>log4j</groupId>
