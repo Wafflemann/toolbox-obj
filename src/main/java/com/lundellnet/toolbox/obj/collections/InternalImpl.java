@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.annotations.CollectionConstant;
 import com.lundellnet.toolbox.obj.annotations.DataLocation;
+import com.lundellnet.toolbox.obj.functions.FunctionTools;
 
 class InternalImpl {
 	@FunctionalInterface
@@ -146,7 +147,7 @@ class InternalImpl {
 		
 		protected Collection(FieldBuilder<T, ? extends Field<T>> fieldBuilder, Class<T> collectionClass, Supplier<T> collectionSupplier) {
 			this.collectionClass = collectionClass;
-			this.collectionFields = Arrays.stream(collectionClass.getFields()).parallel()
+			this.collectionFields = Arrays.stream(collectionClass.getDeclaredFields()).parallel()
 					.map((field) -> fieldBuilder.build(field))
 					.map((fieldAccess) -> new SimpleEntry<String, Field<T>>(fieldAccess.getFieldName(), fieldAccess))
 					.collect(Collectors.toConcurrentMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -217,9 +218,12 @@ class InternalImpl {
 			this.collectObjectType = collectObjectType;
 			this.collectEnumType = collectEnumType;
 			this.collectionTypes = new HashMap<>();
-			this.collections = Arrays.stream((E[]) Reflect.invokePublicMethod(Reflect.getPublicMethod("values", collectEnumType), null))
-				.map((enumType) -> {
-					Class<?> collectionType = enumType.getClass().getAnnotation(CollectionConstant.class).collectionClass();
+			this.collections = //Arrays.stream((E[]) Reflect.invokePublicMethod(Reflect.getPublicMethod("values", collectEnumType), null))
+				Arrays.stream(collectEnumType.getDeclaredFields())
+				.filter((enumField) -> enumField.isEnumConstant())
+				.map((enumField) -> {
+					Class<?> collectionType = enumField.getAnnotation(CollectionConstant.class).collectionClass();
+					E enumType = FunctionTools.enumInstance(enumField);
 					
 					collectionTypes.put(collectionType, enumType);
 					
