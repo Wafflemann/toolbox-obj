@@ -1,3 +1,21 @@
+/*
+ Copyright 2017 Appropriate Technologies LLC.
+
+ This file is part of toolbox-obj, a component of the Lundellnet Java Toolbox.
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.lundellnet.toolbox.obj;
 
 import java.lang.reflect.Constructor;
@@ -6,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.function.Function;
 
 import org.apache.log4j.Logger;
 
@@ -149,10 +168,10 @@ public class Reflect {
         try {
             field = fieldClass.getField(fieldName);
         } catch (NoSuchFieldException ex) {
-            log().error("Error accessing public field: \"" + field.getName() + "\"\nEX: ", ex);
+            log().error("Error accessing public field: \"" + fieldName + "\"\nEX: ", ex);
             throw new RuntimeException(ex);
         } catch (SecurityException ex) {
-            log().error("Error accessing public field: \"" + field.getName() + "\"\nEX: ", ex);
+            log().error("Error accessing public field: \"" + fieldName + "\"\nEX: ", ex);
             throw new RuntimeException(ex);
         }
         return field;
@@ -174,6 +193,20 @@ public class Reflect {
         }
         
         return fields;
+    }
+    
+    public static Field getDeclaredField(String fieldName, Class<?> fieldClass) {
+        Field field = null;
+        try {
+            field = fieldClass.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException ex) {
+            log().error("Error accessing declared field: \"" + fieldName + "\"\nEX: ", ex);
+            throw new RuntimeException(ex);
+        } catch (SecurityException ex) {
+            log().error("Error accessing declared field: \"" + fieldName + "\"\nEX: ", ex);
+            throw new RuntimeException(ex);
+        }
+        return field;
     }
     
     public static Field[] getDeclaredFields(Class<?> fieldClass) {
@@ -284,6 +317,15 @@ public class Reflect {
         }
         
         return returnValue;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public static <E extends Enum<E>> Function<Field, E> enumInstance() {
+    	return (f) -> (E) Reflect.invokePublicMethod(Reflect.getPublicMethod("valueOf", f.getType(), String.class), null, f.getName());
+    }
+    
+    public static <E extends Enum<E>> E enumInstance(Field f) {
+    	return Reflect.<E>enumInstance().apply(f);
     }
     
     /**

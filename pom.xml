@@ -5,7 +5,7 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.9-SNAPSHOT</version>
     <name>toolbox-obj</name>
 
     <properties>
@@ -53,14 +53,17 @@
 		    </plugin>
 		</plugins>
 	    </pluginManagement>
+	    <resources>
+		<resource>
+		    <directory>src/main/java</directory>
+		    <includes>
+			<include>**/*.java</include>
+		    </includes>
+		</resource>
+	    </resources>
 	</build>
 
 	<dependencies>
-	    <dependency>
-		<groupId>com.lundellnet</groupId>
-		<artifactId>toolbox-obj-api</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
-	    </dependency>
 	    <dependency>
 		<groupId>log4j</groupId>
 		<artifactId>log4j</artifactId>
