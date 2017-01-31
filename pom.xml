@@ -5,7 +5,7 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.8_1-beta</version>
     <name>toolbox-obj</name>
 
     <properties>
