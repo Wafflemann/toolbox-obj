@@ -5,7 +5,7 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.0.8_2-beta</version>
     <name>toolbox-obj</name>
 
     <properties>
@@ -58,6 +58,12 @@
 		    <directory>src/main/java</directory>
 		    <includes>
 			<include>**/*.java</include>
+		    </includes>
+		</resource>
+		<resource>
+		    <directory></directory>
+		    <includes>
+			<include>LICENSE-2.0.txt</include>
 		    </includes>
 		</resource>
 	    </resources>
