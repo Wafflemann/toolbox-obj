@@ -11,31 +11,45 @@
     <properties>
 	<java.version>1.8</java.version>
 	<maven.version>2.3.2</maven.version>
+	<toolbox_obj.dir.api_doc>${project.build.directory}/site/toolbox-obj_apidocs</toolbox_obj.dir.api_doc>
     </properties>
 
     <repositories>
 	<repository>
 	    <id>git2.release</id>
 	    <name>git2 release repository</name>
-	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases/</url>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases</url>
 	</repository>
 	<repository>
 	    <id>git2.snapshot</id>
 	    <name>git2 snapshot repository</name>
-	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots/</url>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots</url>
 	</repository>
     </repositories>
+
+    <pluginRepositories>
+	<pluginRepository>
+	    <id>git2.release</id>
+	    <name>git2 release repository</name>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases</url>
+	</pluginRepository>
+	<pluginRepository>
+	    <id>git2.snapshot</id>
+	    <name>git2 snapshot repository</name>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots</url>
+	</pluginRepository>
+    </pluginRepositories>
 
     <distributionManagement>
 	<repository>
 	    <id>lundellnet-git2</id>
 	    <name>git2 release repository</name>
-    	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases/</url>
+    	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/releases</url>
 	</repository>
 	<snapshotRepository>
 	    <id>lundellnet-git2</id>
 	    <name>git2 snapshot repository</name>
-	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots/</url>
+	    <url>https://git2.lundellnet.com:8084/nexus/content/repositories/snapshots</url>
 	</snapshotRepository>
     </distributionManagement>
 
@@ -67,19 +81,42 @@
 		    </includes>
 		</resource>
 	    </resources>
+	    <plugins>
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-javadoc-plugin</artifactId>
+		    <version>2.10.4</version>
+		    <configuration>
+			<outputDirectory>${toolbox_obj.dir.api_doc}</outputDirectory>
+			<additionalparam>-Xdoclint:none</additionalparam>
+		    </configuration>
+		    <executions>
+			<execution>
+			    <id>generate-javadocs</id>
+			    <phase>package</phase>
+			    <goals>
+				<goal>javadoc</goal>
+			    </goals>
+			</execution>
+		    </executions>
+		</plugin>
+	    </plugins>
 	</build>
 
 	<dependencies>
+    
 	    <dependency>
 		<groupId>log4j</groupId>
 		<artifactId>log4j</artifactId>
 		<version>1.2.17</version>
 	    </dependency>
+
 	    <dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
 		<version>3.8.1</version>
 		<scope>test</scope>
 	    </dependency>
+
 	</dependencies>
 </project>
