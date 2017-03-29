@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
 import com.lundellnet.toolbox.obj.data_access.configs.CollectingDataAccessConf;
-import com.lundellnet.toolbox.obj.elements.configs.AbstractEnumElementConf;
+import com.lundellnet.toolbox.obj.element.configs.AbstractEnumElementConf;
 
 public class StrEnumElementConf <I, O, D extends Enum<D>>
 		extends AbstractEnumElementConf<Stream<I>, O, D>

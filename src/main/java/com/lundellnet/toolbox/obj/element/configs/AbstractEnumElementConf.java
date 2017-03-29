@@ -15,21 +15,31 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.lundellnet.toolbox.obj.data_access.configurables;
+package com.lundellnet.toolbox.obj.element.configs;
 
-import java.util.Set;
-import java.util.stream.Stream;
+import java.lang.reflect.Field;
 
-import com.lundellnet.toolbox.obj.data_access.configs.CollectingSetAccessConf;
+import com.lundellnet.toolbox.obj.elements.configs.EnumElementConf;
 
-public interface CollectingSetAccess <I, O, C extends CollectingSetAccessConf<I, O>>
-		extends ConfigurableDataAccess<C>
+public abstract class AbstractEnumElementConf <I, O, D extends Enum<D>>
+		implements EnumElementConf<I, O, D>
 {
-	default Set<O> get() {
-		return conf().dataPoint().getter().get();
-	}
+	private final Class<D> enumClass;
+	private final Field enumConstField;
 	
-	default void set(Stream<I> s) {
-		conf().dataPoint().setter().accept(s);
+	public AbstractEnumElementConf(Class<D> enumClass, Field enumConstField) {
+		this.enumClass = enumClass;
+		this.enumConstField = enumConstField;
 	}
+
+	@Override
+	public Class<D> enumClass() {
+		return enumClass;
+	}
+
+	@Override
+	public Field enumConstField() {
+		return enumConstField;
+	}
+
 }

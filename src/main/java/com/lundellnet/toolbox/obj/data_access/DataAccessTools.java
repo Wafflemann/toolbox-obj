@@ -31,10 +31,6 @@ import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.collectors.CoreCollector;
 
 public class DataAccessTools {
-	public interface FieldPoint {
-		Field field();
-	}
-	
 	@SuppressWarnings("unchecked")
 	private static <T> List<T> listGetter(Method g, Supplier<?> s) {
 		return ((List<T>) Reflect.invokePublicMethod(g, s.get()));

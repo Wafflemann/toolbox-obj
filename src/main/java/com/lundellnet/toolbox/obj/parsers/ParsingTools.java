@@ -56,26 +56,6 @@ public class ParsingTools {
 		}
 	}
 	
-	public interface Parser <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R> {
-		BiFunction<C, T, E> elementInit();
-		
-		BiFunction<C, T, E> identifier();
-		
-		BiConsumer<E, T> accepter();
-		
-		BinaryOperator<E> checker();
-		
-		Function<C, R> finisher();
-		
-		C collection();
-		
-		void accept(T t);
-		
-		C combine(T t1, T t2);
-		
-		R transform();
-	}
-	
 	static class DataParserImpl <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R>
 			implements DataParser<T, C, E, R>
 	{

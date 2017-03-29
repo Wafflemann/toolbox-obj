@@ -28,7 +28,7 @@ import com.lundellnet.toolbox.obj.parsers.compilers.DataParserCompiler;
 import com.lundellnet.toolbox.obj.parsers.generators.ElementCollectionGenerator;
 
 public interface DataParser <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R>
-		extends ParsingTools.Parser<T, C, E, R>
+		extends Parser<T, C, E, R>
 {	
 	public static <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R>
 			DataParserCompiler<T, C, E, R> compiler(ElementCollectionGenerator<C, E, R> cComp)
