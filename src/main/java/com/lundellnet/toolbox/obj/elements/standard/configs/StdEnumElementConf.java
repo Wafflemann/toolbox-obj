@@ -20,9 +20,10 @@ package com.lundellnet.toolbox.obj.elements.standard.configs;
 import java.lang.reflect.Field;
 import java.util.function.Supplier;
 
+import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
 import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
-import com.lundellnet.toolbox.obj.element.configs.AbstractEnumElementConf;
+import com.lundellnet.toolbox.obj.elements.configs.AbstractEnumElementConf;
 
 public class StdEnumElementConf <T, D extends Enum<D>>
 		extends AbstractEnumElementConf<T, T, D>
@@ -36,7 +37,7 @@ public class StdEnumElementConf <T, D extends Enum<D>>
 	) {
 		super(enumClass, enumConstField);
 		
-		this.dataPoint = StandardDataAccessConf.<T>dataPointBuilder().build(parentClass, parentSupplier, elementField);
+		this.dataPoint = DataAccessTools.<T>dataPointBasicBuilder().build(parentClass, parentSupplier, elementField);
 	}
 
 	@Override

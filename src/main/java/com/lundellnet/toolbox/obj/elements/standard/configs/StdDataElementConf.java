@@ -20,6 +20,7 @@ package com.lundellnet.toolbox.obj.elements.standard.configs;
 import java.lang.reflect.Field;
 import java.util.function.Supplier;
 
+import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
 import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
 
@@ -29,7 +30,7 @@ public class StdDataElementConf <T>
 	private final DataPoint<T, T> dataPoint;
 	
 	public StdDataElementConf(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField) {
-		dataPoint = StandardDataAccessConf.<T>dataPointBuilder().build(parentClass, parentSupplier, elementField);
+		dataPoint = DataAccessTools.<T>dataPointBasicBuilder().build(parentClass, parentSupplier, elementField);
 	}
 
 	@Override

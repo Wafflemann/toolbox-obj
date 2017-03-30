@@ -22,9 +22,10 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
+import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
 import com.lundellnet.toolbox.obj.data_access.configs.CollectingDataAccessConf;
-import com.lundellnet.toolbox.obj.element.configs.AbstractEnumElementConf;
+import com.lundellnet.toolbox.obj.elements.configs.AbstractEnumElementConf;
 
 public class StrEnumElementConf <I, O, D extends Enum<D>>
 		extends AbstractEnumElementConf<Stream<I>, O, D>
@@ -38,7 +39,7 @@ public class StrEnumElementConf <I, O, D extends Enum<D>>
 	) {
 		super(enumClass, enumConstField);
 		
-		this.dataPoint = CollectingDataAccessConf.<I, O>dataPointBuilder().build(parentClass, parentSupplier, elementField, collector);
+		this.dataPoint = DataAccessTools.<I, O>collectingDataPointObjectBuilder().build(parentClass, parentSupplier, elementField, collector);
 	}
 	
 	@Override

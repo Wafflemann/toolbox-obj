@@ -29,6 +29,9 @@ import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.collectors.CoreCollector;
+import com.lundellnet.toolbox.obj.data_access.builders.CollectingObjectDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.builders.CollectingSetDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.builders.DataPointBuilder;
 
 public class DataAccessTools {
 	@SuppressWarnings("unchecked")
@@ -246,5 +249,21 @@ public class DataAccessTools {
 					}
 				};
 		}
+	}
+	
+	public static <T> DataPointBuilder<T, T> dataPointBasicBuilder() {
+		return DataPointBasic<T, T>::new;
+	}
+	
+	public static <T> DataPointBuilder<T, Set<T>> dataPointSetBuilder() {
+		return DataPointSet<T>::new;
+	}
+	
+	public static <T, R> CollectingObjectDataPointBuilder<T, R> collectingDataPointObjectBuilder() {
+		return CollectingObjectDataPoint<T, R>::new;
+	}
+	
+	public static <T, R> CollectingSetDataPointBuilder<T, R> collectingDataPointSetBuilder() {
+		return CollectingSetDataPoint<T, R>::new;
 	}
 }
