@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,6 +32,8 @@ import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.collectors.CoreCollector;
 import com.lundellnet.toolbox.obj.data_access.builders.CollectingObjectDataPointBuilder;
 import com.lundellnet.toolbox.obj.data_access.builders.CollectingSetDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.builders.ConvertingObjectDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.builders.ConvertingSetDataPointBuilder;
 import com.lundellnet.toolbox.obj.data_access.builders.DataPointBuilder;
 
 public class DataAccessTools {
@@ -251,6 +254,97 @@ public class DataAccessTools {
 		}
 	}
 	
+	protected static class ConvertingObjectDataPoint <I, O>
+			extends FieldPointImpl
+			implements DataPoint<I, O>
+	{
+		private final ReentrantReadWriteLock pointLock = new ReentrantReadWriteLock();
+		private final Supplier<?> parentSupplier;
+		private final Method dataGetter;
+		private final Method dataSetter;
+		private final Function<I, O> converter;
+		
+		ConvertingObjectDataPoint(
+				Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, Function<I, O> converter
+		) {
+			super(elementField);
+			
+			this.parentSupplier = parentSupplier;
+			this.dataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
+			this.dataSetter = pointAccessMethod(parentClass, elementField, AccessType.SET);
+			this.converter = converter;
+		}
+		
+		@Override
+		public Consumer<I> setter() {
+			return (t) -> {
+				try {
+					pointLock.writeLock().lock();
+					Reflect.invokePublicMethod(dataSetter, parentSupplier.get(), converter.apply(t));
+				} finally {
+					pointLock.writeLock().unlock();
+				}
+			};
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public Supplier<O> getter() {
+			return () -> {
+					try {
+						pointLock.readLock().lock();
+						return (O) Reflect.invokePublicMethod(dataGetter, parentSupplier.get());
+					} finally {
+						pointLock.readLock().unlock();
+					}
+				};
+		}
+	}
+	
+	protected static class ConvertingSetDataPoint <I, O>
+			extends FieldPointImpl
+			implements DataPoint<I, Set<O>>
+	{
+		private final ReentrantReadWriteLock pointLock = new ReentrantReadWriteLock();
+		private final Supplier<?> parentSupplier;
+		private final Method listDataGetter;
+		private final Function<I, O> converter;
+		
+		ConvertingSetDataPoint(
+				Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, Function<I, O> converter
+		) {
+			super(elementField);
+			
+			this.parentSupplier = parentSupplier;
+			this.listDataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
+			this.converter = converter;
+		}
+
+		@Override
+		public Consumer<I> setter() {
+			return (t) -> {
+					try {
+						pointLock.writeLock().lock();
+						DataAccessTools.<O>listGetter(listDataGetter, parentSupplier).add(converter.apply(t));
+					} finally {
+						pointLock.writeLock().unlock();
+					}
+				};
+		}
+
+		@Override
+		public Supplier<Set<O>> getter() {
+			return () -> {
+					try {
+						pointLock.readLock().lock();
+						return DataAccessTools.<O>listGetter(listDataGetter, parentSupplier).parallelStream().collect(Collectors.toSet());
+					} finally {
+						pointLock.readLock().unlock();
+					}
+				};
+		}
+	}
+	
 	public static <T> DataPointBuilder<T, T> dataPointBasicBuilder() {
 		return DataPointBasic<T, T>::new;
 	}
@@ -265,5 +359,13 @@ public class DataAccessTools {
 	
 	public static <T, R> CollectingSetDataPointBuilder<T, R> collectingDataPointSetBuilder() {
 		return CollectingSetDataPoint<T, R>::new;
+	}
+	
+	public static <T, R> ConvertingObjectDataPointBuilder<T, R> convertingDataPointObjectBuilder() {
+		return ConvertingObjectDataPoint<T, R>::new;
+	}
+	
+	public static <T, R> ConvertingSetDataPointBuilder<T, R> convertingDataPointSetBuilder() {
+		return ConvertingSetDataPoint<T, R>::new;
 	}
 }
