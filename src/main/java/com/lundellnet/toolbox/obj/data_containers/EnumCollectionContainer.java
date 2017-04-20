@@ -21,7 +21,7 @@ import java.util.EnumMap;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import com.lundellnet.toolbox.obj.data_containers.builders.EnumCollectionBuilder;
+import com.lundellnet.toolbox.obj.data_containers.compilation.EnumCollectionBuilder;
 import com.lundellnet.toolbox.obj.elements.EnumElement;
 
 public class EnumCollectionContainer <D extends Enum<D>, E extends EnumElement<?, ?, ?, D>>

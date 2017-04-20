@@ -23,16 +23,16 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 import com.lundellnet.toolbox.obj.collections.DataElementCollection;
+import com.lundellnet.toolbox.obj.collections.compilation.CollectionProvider;
 import com.lundellnet.toolbox.obj.data_access.configurables.ConfigurableDataAccess;
-import com.lundellnet.toolbox.obj.parsers.compilers.DataParserCompiler;
-import com.lundellnet.toolbox.obj.parsers.generators.ElementCollectionGenerator;
+import com.lundellnet.toolbox.obj.parsers.compilation.ParserBuilder;
 
 public interface DataParser <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R>
 		extends Parser<T, C, E, R>
 {	
 	public static <T, C extends DataElementCollection<R, E>, E extends ConfigurableDataAccess<?>, R>
-			DataParserCompiler<T, C, E, R> compiler(ElementCollectionGenerator<C, E, R> cComp)
-	{ return (e, i, a, c, f) -> new ParsingTools.DataParserImpl<T, C, E, R>(cComp.generate(), e, i, a, c, f); }
+			ParserBuilder<T, DataParser<T, C, E, R>, C, E, R> builder(CollectionProvider<C, E, R> cComp)
+	{ return (e, i, a, c, f) -> new ParsingTools.DataParserImpl<T, C, E, R>(cComp.provide(), e, i, a, c, f); }
 	
 	default void accept(T t) {
 		BiConsumer<E, T> a = accepter();

@@ -19,14 +19,14 @@ package com.lundellnet.toolbox.obj.elements.stream_in;
 
 import java.util.stream.Stream;
 
-import com.lundellnet.toolbox.obj.data_access.configs.CollectingDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
 import com.lundellnet.toolbox.obj.elements.LocatableElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrDataElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrDataElementBuilder;
 
 @FunctionalInterface
 public interface LocDataStreamInElement <T, R>
-		extends CollectingDataAccess<T, R, CollectingDataAccessConf<T, R>>, LocatableElement<Stream<T>, R, CollectingDataAccessConf<T, R>>
+		extends CollectingDataAccess<T, R, DataAccessConf<Stream<T>, R>>, LocatableElement<Stream<T>, R, DataAccessConf<Stream<T>, R>>
 {
 	public static <T, R>
 			StrDataElementBuilder<T, R, LocDataStreamInElement<T, R>> builder()
@@ -34,6 +34,6 @@ public interface LocDataStreamInElement <T, R>
 	
 	@SuppressWarnings("unchecked")
 	public static <T, R>
-			LocDataStreamInElement<T, R> createElement(CollectingDataAccessConf<?, ?> elementConf)
-	{ return () -> (CollectingDataAccessConf<T, R>) elementConf; }
+			LocDataStreamInElement<T, R> createElement(DataAccessConf<?, ?> elementConf)
+	{ return () -> (DataAccessConf<Stream<T>, R>) elementConf; }
 }

@@ -18,7 +18,7 @@
 package com.lundellnet.toolbox.obj.elements.standard;
 
 import com.lundellnet.toolbox.obj.elements.LocatableElement;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdEnumElementBuilder;
 import com.lundellnet.toolbox.obj.elements.standard.configs.StdEnumElementConf;
 
 @FunctionalInterface

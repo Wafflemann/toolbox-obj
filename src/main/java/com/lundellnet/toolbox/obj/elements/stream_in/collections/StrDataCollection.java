@@ -23,9 +23,9 @@ import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.collections.CollectingDataElementCollection;
 import com.lundellnet.toolbox.obj.collections.configurables.DataCollection;
-import com.lundellnet.toolbox.obj.collections.generators.ParsingCollectorGenerator;
+import com.lundellnet.toolbox.obj.collectors.compilation.ParsingCollectorGenerator;
 import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrDataElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrDataElementBuilder;
 import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrDataCollectionConf;
 
 @FunctionalInterface

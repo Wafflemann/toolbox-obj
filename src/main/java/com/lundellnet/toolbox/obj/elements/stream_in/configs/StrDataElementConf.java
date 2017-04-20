@@ -24,15 +24,15 @@ import java.util.stream.Stream;
 import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
 import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
-import com.lundellnet.toolbox.obj.data_access.configs.CollectingDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 
 public class StrDataElementConf <I, O>
-		implements CollectingDataAccessConf<I, O>
+		implements DataAccessConf<Stream<I>, O>
 {
 	private final DataPoint<Stream<I>, O> dataPoint;
 	
 	public StrDataElementConf(
-			Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, ParsingCollector<I, ?, O> collector
+			Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, ParsingCollector<I, ?, ?, O> collector
 	) {
 		this.dataPoint = DataAccessTools.<I, O>collectingDataPointObjectBuilder().build(parentClass, parentSupplier, elementField, collector);
 	}

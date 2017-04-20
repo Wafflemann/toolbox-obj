@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
 
 import com.lundellnet.toolbox.obj.collections.configurables.EnumDataCollection;
 import com.lundellnet.toolbox.obj.elements.standard.EnumDataElement;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdEnumElementBuilder;
 import com.lundellnet.toolbox.obj.elements.standard.configs.StdEnumCollectionConf;
 
 @FunctionalInterface

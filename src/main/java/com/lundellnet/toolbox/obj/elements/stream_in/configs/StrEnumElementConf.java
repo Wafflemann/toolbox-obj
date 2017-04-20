@@ -24,18 +24,18 @@ import java.util.stream.Stream;
 import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
 import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
-import com.lundellnet.toolbox.obj.data_access.configs.CollectingDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 import com.lundellnet.toolbox.obj.elements.configs.AbstractEnumElementConf;
 
 public class StrEnumElementConf <I, O, D extends Enum<D>>
 		extends AbstractEnumElementConf<Stream<I>, O, D>
-		implements CollectingDataAccessConf<I, O>
+		implements DataAccessConf<Stream<I>, O>
 {
 	private final DataPoint<Stream<I>, O> dataPoint;
 	
 	public StrEnumElementConf(
 			Class<?> parentClass, Supplier<?> parentSupplier, Field elementField,
-			ParsingCollector<I, ?, O> collector, Class<D> enumClass, Field enumConstField
+			ParsingCollector<I, ?, ?, O> collector, Class<D> enumClass, Field enumConstField
 	) {
 		super(enumClass, enumConstField);
 		

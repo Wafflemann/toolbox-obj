@@ -19,7 +19,7 @@ package com.lundellnet.toolbox.obj.elements.standard.configs;
 
 import com.lundellnet.toolbox.obj.collections.configs.DataCollectionConf;
 import com.lundellnet.toolbox.obj.data_access.configurables.StandardDataAccess;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdDataElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdDataElementBuilder;
 
 public interface StdDataCollectionConf <R, E extends StandardDataAccess<?, ?>>
 		extends DataCollectionConf<R, E, StdDataElementBuilder<?, E>>

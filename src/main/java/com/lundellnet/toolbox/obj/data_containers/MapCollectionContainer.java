@@ -24,7 +24,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.data_access.configurables.ConfigurableDataAccess;
-import com.lundellnet.toolbox.obj.data_containers.builders.MapCollectionBuilder;
+import com.lundellnet.toolbox.obj.data_containers.compilation.MapCollectionBuilder;
 
 public class MapCollectionContainer <D, E extends ConfigurableDataAccess<?>>
 		implements CollectionContainer<D, E>

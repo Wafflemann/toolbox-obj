@@ -19,7 +19,7 @@ package com.lundellnet.toolbox.obj.elements.stream_in.configs;
 
 import com.lundellnet.toolbox.obj.collections.configs.EnumDataCollectionConf;
 import com.lundellnet.toolbox.obj.elements.stream_in.EnumDataStreamInElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrEnumElementBuilder;
 
 public interface StrEnumCollectionConf <D extends Enum<D>, R, E extends EnumDataStreamInElement<?, ?, D>>
 		extends StrDataCollectionConf<R, E, StrEnumElementBuilder<?, ?, D, E>>, EnumDataCollectionConf<D, R, E, StrEnumElementBuilder<?, ?, D, E>>

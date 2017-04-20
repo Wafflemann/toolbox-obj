@@ -20,7 +20,7 @@ package com.lundellnet.toolbox.obj.elements.stream_in;
 import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.elements.LocatableElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrEnumElementBuilder;
 import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrEnumElementConf;
 
 @FunctionalInterface

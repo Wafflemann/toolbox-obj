@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
 import com.lundellnet.toolbox.obj.elements.EnumElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrEnumElementBuilder;
 import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrEnumElementConf;
 
 @FunctionalInterface

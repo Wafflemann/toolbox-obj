@@ -18,9 +18,9 @@
 package com.lundellnet.toolbox.obj.elements.stream_in.configs;
 
 import com.lundellnet.toolbox.obj.collections.configs.DataCollectionConf;
-import com.lundellnet.toolbox.obj.collections.generators.ParsingCollectorGenerator;
+import com.lundellnet.toolbox.obj.collectors.compilation.ParsingCollectorGenerator;
 import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
-import com.lundellnet.toolbox.obj.elements.builders.ElementBuilder;
+import com.lundellnet.toolbox.obj.elements.compilation.ElementBuilder;
 
 public interface StrDataCollectionConf <R, E extends CollectingDataAccess<?, ?, ?>, B extends ElementBuilder<?, E>>
 		extends DataCollectionConf<R, E, B>

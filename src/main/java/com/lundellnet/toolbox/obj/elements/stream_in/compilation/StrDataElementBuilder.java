@@ -15,19 +15,21 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.lundellnet.toolbox.obj.elements.stream_in.builders;
+package com.lundellnet.toolbox.obj.elements.stream_in.compilation;
 
 import java.lang.reflect.Field;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
-import com.lundellnet.toolbox.obj.elements.builders.ElementBuilder;
-import com.lundellnet.toolbox.obj.elements.stream_in.EnumDataStreamInElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrEnumElementConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
+import com.lundellnet.toolbox.obj.elements.compilation.ElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrDataElementConf;
 
-public interface StrEnumElementBuilder <I, O, D extends Enum<D>, E extends EnumDataStreamInElement<I, O, D>>
-		extends ElementBuilder<StrEnumElementConf<I, O, D>, E>
+public interface StrDataElementBuilder <I, O, E extends CollectingDataAccess<I, O, ?>>
+		extends ElementBuilder<DataAccessConf<Stream<I>, O>, E>	
 {
-	default E build(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, ParsingCollector<I, ?, O> collector, Class<D> enumClass, Field enumConstField)
-			{ return build(new StrEnumElementConf<>(parentClass, parentSupplier, elementField, collector, enumClass, enumConstField)); }
+	default E build(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, ParsingCollector<I, ?, ?, O> collector)
+			{ return build(new StrDataElementConf<>(parentClass, parentSupplier, elementField, collector)); }
 }

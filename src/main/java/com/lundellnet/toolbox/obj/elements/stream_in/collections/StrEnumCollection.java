@@ -23,9 +23,9 @@ import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.collections.CollectingDataElementCollection;
 import com.lundellnet.toolbox.obj.collections.configurables.EnumDataCollection;
-import com.lundellnet.toolbox.obj.collections.generators.ParsingCollectorGenerator;
+import com.lundellnet.toolbox.obj.collectors.compilation.ParsingCollectorGenerator;
 import com.lundellnet.toolbox.obj.elements.stream_in.EnumDataStreamInElement;
-import com.lundellnet.toolbox.obj.elements.stream_in.builders.StrEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.stream_in.compilation.StrEnumElementBuilder;
 import com.lundellnet.toolbox.obj.elements.stream_in.configs.StrEnumCollectionConf;
 
 @FunctionalInterface

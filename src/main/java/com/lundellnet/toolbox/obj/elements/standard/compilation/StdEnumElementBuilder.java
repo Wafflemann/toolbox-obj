@@ -15,14 +15,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.lundellnet.toolbox.obj.collections.generators;
+package com.lundellnet.toolbox.obj.elements.standard.compilation;
 
+import java.lang.reflect.Field;
 import java.util.function.Supplier;
 
-import com.lundellnet.toolbox.obj.collections.DataElementCollection;
-import com.lundellnet.toolbox.obj.collectors.ParsingCollector;
+import com.lundellnet.toolbox.obj.elements.compilation.ElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.EnumDataElement;
+import com.lundellnet.toolbox.obj.elements.standard.configs.StdEnumElementConf;
 
 @FunctionalInterface
-public interface ParsingCollectorGenerator <T, R> {
-	ParsingCollector<T, ? extends DataElementCollection<R, ?>, R> generate(Class<R> resultClass, Supplier<R> resultSupplier);
+public interface StdEnumElementBuilder <T, D extends Enum<D>, E extends EnumDataElement<T, D>>
+		extends ElementBuilder<StdEnumElementConf<T, D>, E>
+{
+	default E build(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, Class<D> enumClass, Field enumConstField)
+			{ return build(new StdEnumElementConf<>(parentClass, parentSupplier, elementField, enumClass, enumConstField)); }
 }

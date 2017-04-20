@@ -17,7 +17,7 @@
  */
 package com.lundellnet.toolbox.obj.collections;
 
-import com.lundellnet.toolbox.obj.collections.generators.ParsingCollectorGenerator;
+import com.lundellnet.toolbox.obj.collectors.compilation.ParsingCollectorGenerator;
 import com.lundellnet.toolbox.obj.data_access.configurables.CollectingDataAccess;
 
 public interface CollectingDataElementCollection <R, E extends CollectingDataAccess<?, ?, ?>>

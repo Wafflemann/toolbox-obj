@@ -15,19 +15,20 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package com.lundellnet.toolbox.obj.elements.standard.builders;
+package com.lundellnet.toolbox.obj.elements.standard.compilation;
 
 import java.lang.reflect.Field;
 import java.util.function.Supplier;
 
-import com.lundellnet.toolbox.obj.elements.builders.ElementBuilder;
-import com.lundellnet.toolbox.obj.elements.standard.EnumDataElement;
-import com.lundellnet.toolbox.obj.elements.standard.configs.StdEnumElementConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configurables.StandardDataAccess;
+import com.lundellnet.toolbox.obj.elements.compilation.ElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.configs.StdDataElementConf;
 
 @FunctionalInterface
-public interface StdEnumElementBuilder <T, D extends Enum<D>, E extends EnumDataElement<T, D>>
-		extends ElementBuilder<StdEnumElementConf<T, D>, E>
+public interface StdDataElementBuilder <T, E extends StandardDataAccess<T, ?>>
+		extends ElementBuilder<DataAccessConf<T, T>, E>
 {
-	default E build(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField, Class<D> enumClass, Field enumConstField)
-			{ return build(new StdEnumElementConf<>(parentClass, parentSupplier, elementField, enumClass, enumConstField)); }
+	default E build(Class<?> parentClass, Supplier<?> parentSupplier, Field elementField)
+			{ return build(new StdDataElementConf<>(parentClass, parentSupplier, elementField)); }
 }

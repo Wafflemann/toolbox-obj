@@ -17,14 +17,14 @@
  */
 package com.lundellnet.toolbox.obj.elements.standard;
 
-import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 import com.lundellnet.toolbox.obj.data_access.configurables.StandardDataAccess;
 import com.lundellnet.toolbox.obj.elements.LocatableElement;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdDataElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdDataElementBuilder;
 
 @FunctionalInterface
 public interface LocDataElement <T>
-		extends StandardDataAccess<T, StandardDataAccessConf<T>>, LocatableElement<T, T, StandardDataAccessConf<T>>
+		extends StandardDataAccess<T, DataAccessConf<T, T>>, LocatableElement<T, T, DataAccessConf<T, T>>
 {
 	public static <T>
 			StdDataElementBuilder<T, LocDataElement<T>> builder()
@@ -32,6 +32,6 @@ public interface LocDataElement <T>
 	
 	@SuppressWarnings("unchecked")
 	public static <T>
-			LocDataElement<T> createElement(StandardDataAccessConf<?> elementConf)
-	{ return () -> (StandardDataAccessConf<T>) elementConf; }
+			LocDataElement<T> createElement(DataAccessConf<?, ?> elementConf)
+	{ return () -> (DataAccessConf<T, T>) elementConf; }
 }

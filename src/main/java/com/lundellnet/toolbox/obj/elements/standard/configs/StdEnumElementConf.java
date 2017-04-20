@@ -22,12 +22,12 @@ import java.util.function.Supplier;
 
 import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
-import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 import com.lundellnet.toolbox.obj.elements.configs.AbstractEnumElementConf;
 
 public class StdEnumElementConf <T, D extends Enum<D>>
 		extends AbstractEnumElementConf<T, T, D>
-		implements StandardDataAccessConf<T>
+		implements DataAccessConf<T, T>
 {
 	private final DataPoint<T, T> dataPoint;
 	

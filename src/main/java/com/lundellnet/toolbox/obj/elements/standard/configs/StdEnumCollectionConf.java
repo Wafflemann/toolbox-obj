@@ -20,7 +20,7 @@ package com.lundellnet.toolbox.obj.elements.standard.configs;
 import com.lundellnet.toolbox.obj.collections.configs.DataCollectionConf;
 import com.lundellnet.toolbox.obj.collections.configs.EnumDataCollectionConf;
 import com.lundellnet.toolbox.obj.elements.standard.EnumDataElement;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdEnumElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdEnumElementBuilder;
 
 public interface StdEnumCollectionConf <D extends Enum<D>, R, E extends EnumDataElement<?, D>>
 		extends DataCollectionConf<R, E, StdEnumElementBuilder<?, D, E>>, EnumDataCollectionConf<D, R, E, StdEnumElementBuilder<?, D, E>>

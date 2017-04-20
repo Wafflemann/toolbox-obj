@@ -22,10 +22,10 @@ import java.util.function.Supplier;
 
 import com.lundellnet.toolbox.obj.data_access.DataAccessTools;
 import com.lundellnet.toolbox.obj.data_access.DataPoint;
-import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 
 public class StdDataElementConf <T>
-		implements StandardDataAccessConf<T>
+		implements DataAccessConf<T, T>
 {
 	private final DataPoint<T, T> dataPoint;
 	

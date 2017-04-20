@@ -17,14 +17,14 @@
  */
 package com.lundellnet.toolbox.obj.elements.standard;
 
-import com.lundellnet.toolbox.obj.data_access.configs.StandardDataAccessConf;
+import com.lundellnet.toolbox.obj.data_access.configs.DataAccessConf;
 import com.lundellnet.toolbox.obj.data_access.configurables.ConfigurableFieldAccess;
 import com.lundellnet.toolbox.obj.data_access.configurables.StandardDataAccess;
-import com.lundellnet.toolbox.obj.elements.standard.builders.StdDataElementBuilder;
+import com.lundellnet.toolbox.obj.elements.standard.compilation.StdDataElementBuilder;
 
 @FunctionalInterface
 public interface DataElement <T>
-		extends StandardDataAccess<T, StandardDataAccessConf<T>>, ConfigurableFieldAccess<T, T, StandardDataAccessConf<T>>
+		extends StandardDataAccess<T, DataAccessConf<T, T>>, ConfigurableFieldAccess<T, T, DataAccessConf<T, T>>
 {
 	public static <T>
 			StdDataElementBuilder<T, DataElement<T>> builder()
@@ -32,6 +32,6 @@ public interface DataElement <T>
 
 	@SuppressWarnings("unchecked")
 	public static <T>
-			DataElement<T> createElement(StandardDataAccessConf<?> elementConf)
-	{ return () -> (StandardDataAccessConf<T>) elementConf; }
+			DataElement<T> createElement(DataAccessConf<?, ?> elementConf)
+	{ return () -> (DataAccessConf<T, T>) elementConf; }
 }

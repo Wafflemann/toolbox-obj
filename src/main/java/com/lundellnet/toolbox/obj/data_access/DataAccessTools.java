@@ -30,11 +30,11 @@ import java.util.stream.Stream;
 
 import com.lundellnet.toolbox.obj.Reflect;
 import com.lundellnet.toolbox.obj.collectors.CoreCollector;
-import com.lundellnet.toolbox.obj.data_access.builders.CollectingObjectDataPointBuilder;
-import com.lundellnet.toolbox.obj.data_access.builders.CollectingSetDataPointBuilder;
-import com.lundellnet.toolbox.obj.data_access.builders.ConvertingObjectDataPointBuilder;
-import com.lundellnet.toolbox.obj.data_access.builders.ConvertingSetDataPointBuilder;
-import com.lundellnet.toolbox.obj.data_access.builders.DataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.compilation.CollectingObjectDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.compilation.CollectingSetDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.compilation.ConvertingObjectDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.compilation.ConvertingSetDataPointBuilder;
+import com.lundellnet.toolbox.obj.data_access.compilation.DataPointBuilder;
 
 public class DataAccessTools {
 	@SuppressWarnings("unchecked")
