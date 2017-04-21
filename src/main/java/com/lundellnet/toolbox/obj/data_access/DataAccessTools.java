@@ -28,7 +28,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.lundellnet.toolbox.obj.Reflect;
+import com.lundellnet.toolbox.Reflect;
+import com.lundellnet.toolbox.evince.MutationType;
 import com.lundellnet.toolbox.obj.collectors.CoreCollector;
 import com.lundellnet.toolbox.obj.data_access.compilation.CollectingObjectDataPointBuilder;
 import com.lundellnet.toolbox.obj.data_access.compilation.CollectingSetDataPointBuilder;
@@ -45,25 +46,6 @@ public class DataAccessTools {
 	static class FieldPointImpl
 			implements FieldPoint
 	{
-		protected enum AccessType {
-			GET, SET
-		}
-		
-		protected static final String GET_SET_REGEX = "\\w{1}(\\w*)([A-Z]*.*)";
-		
-		protected static <D> Method pointAccessMethod(Class<D> dataObjClass, Field field, AccessType accessType) {
-			String fieldName = field.getName();
-			
-			switch (accessType) {
-				case GET:
-					return Reflect.getPublicMethod(fieldName.replaceAll(GET_SET_REGEX, "get" + fieldName.substring(0, 1).toUpperCase() + "$1$2"), dataObjClass);
-				case SET:
-					return Reflect.getPublicMethod(fieldName.replaceAll(GET_SET_REGEX, "set" + fieldName.substring(0, 1).toUpperCase() + "$1$2"), dataObjClass, field.getType());
-				default:
-					return null;
-			}
-		}
-		
 		private final Field field;
 		
 		protected FieldPointImpl(Field field) {
@@ -89,8 +71,8 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.dataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
-			this.dataSetter = pointAccessMethod(parentClass, elementField, AccessType.SET);
+			this.dataGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
+			this.dataSetter = Reflect.getMutationMethod(MutationType.SET, parentClass, elementField);
 		}
 		
 		@Override
@@ -131,7 +113,7 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.listDataElementGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
+			this.listDataElementGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
 		}
 
 		@Override
@@ -175,8 +157,8 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.dataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
-			this.dataSetter = pointAccessMethod(parentClass, elementField, AccessType.SET);
+			this.dataGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
+			this.dataSetter = Reflect.getMutationMethod(MutationType.SET, parentClass, elementField);
 			this.collector = collector;
 		}
 
@@ -223,7 +205,7 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.listDataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
+			this.listDataGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
 			this.collector = collector;
 		}
 
@@ -270,8 +252,8 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.dataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
-			this.dataSetter = pointAccessMethod(parentClass, elementField, AccessType.SET);
+			this.dataGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
+			this.dataSetter = Reflect.getMutationMethod(MutationType.SET, parentClass, elementField);
 			this.converter = converter;
 		}
 		
@@ -316,7 +298,7 @@ public class DataAccessTools {
 			super(elementField);
 			
 			this.parentSupplier = parentSupplier;
-			this.listDataGetter = pointAccessMethod(parentClass, elementField, AccessType.GET);
+			this.listDataGetter = Reflect.getMutationMethod(MutationType.GET, parentClass, elementField);
 			this.converter = converter;
 		}
 

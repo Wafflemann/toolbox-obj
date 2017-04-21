@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
-import com.lundellnet.toolbox.obj.Reflect;
+import com.lundellnet.toolbox.Reflect;
 import com.lundellnet.toolbox.obj.collections.DataElementCollection;
 import com.lundellnet.toolbox.obj.data_access.configurables.ConfigurableDataAccess;
 
