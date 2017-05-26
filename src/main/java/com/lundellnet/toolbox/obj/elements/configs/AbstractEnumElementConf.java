@@ -19,6 +19,7 @@ package com.lundellnet.toolbox.obj.elements.configs;
 
 import java.lang.reflect.Field;
 
+import com.lundellnet.toolbox.Reflect;
 import com.lundellnet.toolbox.obj.elements.configs.EnumElementConf;
 
 public abstract class AbstractEnumElementConf <I, O, D extends Enum<D>>
@@ -26,10 +27,12 @@ public abstract class AbstractEnumElementConf <I, O, D extends Enum<D>>
 {
 	private final Class<D> enumClass;
 	private final Field enumConstField;
+	private final D enumConstant;
 	
 	public AbstractEnumElementConf(Class<D> enumClass, Field enumConstField) {
 		this.enumClass = enumClass;
 		this.enumConstField = enumConstField;
+		this.enumConstant = Reflect.enumInstance(enumConstField);
 	}
 
 	@Override
@@ -42,4 +45,8 @@ public abstract class AbstractEnumElementConf <I, O, D extends Enum<D>>
 		return enumConstField;
 	}
 
+	@Override
+	public D getEnumConstant() {
+		return enumConstant;
+	}
 }
