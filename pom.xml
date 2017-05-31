@@ -5,14 +5,14 @@
     <groupId>com.lundellnet</groupId>
     <artifactId>toolbox-obj</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.10</version>
     <name>toolbox-obj</name>
 
     <properties>
 	<java.version>1.8</java.version>
 	<maven.version>2.3.2</maven.version>
-	<toolbox_obj_api.version>0.0.3-SNAPSHOT</toolbox_obj_api.version>
-	<toolbox_evince.version>0.0.3-SNAPSHOT</toolbox_evince.version>
+	<toolbox_obj_api.version>0.0.3</toolbox_obj_api.version>
+	<toolbox_evince.version>0.0.3</toolbox_evince.version>
 	<toolbox_obj.dir.api_doc>${project.build.directory}/site/toolbox_obj-apidocs</toolbox_obj.dir.api_doc>
     </properties>
 
